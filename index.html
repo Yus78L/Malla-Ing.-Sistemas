@@ -6,56 +6,63 @@
   <title>Malla Curricular - Ingeniería de Sistemas (UNASAM)</title>
   <style>
     body {
-      font-family: Arial, sans-serif;
-      background: #f0f4f8;
+      font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+      background: #e9f1f7;
       margin: 0;
       padding: 20px;
+      color: #1f2937;
     }
     h1 {
       text-align: center;
-      color: #003366;
+      color: #1e3a8a;
+      margin-bottom: 20px;
     }
     .grid {
       display: grid;
       grid-template-columns: repeat(10, 1fr);
       gap: 10px;
-      margin-top: 20px;
+      overflow-x: auto;
     }
     .ciclo {
-      background: #e0eaf1;
+      background: #f1f5f9;
       border-radius: 6px;
       padding: 10px;
+      box-shadow: 0 0 5px rgba(0,0,0,0.1);
     }
     .ciclo h3 {
       text-align: center;
-      color: #003366;
+      color: #0f172a;
+      border-bottom: 2px solid #1e3a8a;
+      margin-bottom: 10px;
+      padding-bottom: 5px;
     }
     .course {
       background: white;
-      border: 2px solid #ccc;
+      border: 2px solid #94a3b8;
       border-radius: 5px;
       padding: 6px;
-      margin: 5px 0;
+      margin: 6px 0;
       cursor: pointer;
       position: relative;
+      font-size: 14px;
       transition: 0.3s;
     }
     .course.approved {
-      background: #c6f6c4;
-      border-color: #38a169;
+      background: #bbf7d0;
+      border-color: #16a34a;
       text-decoration: line-through;
     }
     .course.locked {
-      background: #f9dede;
-      border-color: #e53e3e;
+      background: #fee2e2;
+      border-color: #dc2626;
       cursor: not-allowed;
     }
     .course.locked:hover::after {
       content: attr(data-tooltip);
       position: absolute;
-      background: #333;
+      background: #111827;
       color: white;
-      padding: 4px 8px;
+      padding: 6px 10px;
       border-radius: 4px;
       font-size: 12px;
       white-space: nowrap;
@@ -91,7 +98,79 @@
         { nombre: "Inglés técnico intermedio", prereq: ["Inglés técnico básico"] },
         { nombre: "Fundamentos y técnicas de programación" },
       ],
-      // Continúa agregando los demás ciclos aquí con la misma lógica...
+      "III CICLO": [
+        { nombre: "Taller de deontología y ética" },
+        { nombre: "Taller de liderazgo" },
+        { nombre: "Seminario de gestión de calidad" },
+        { nombre: "Cálculo integral", prereq: ["Cálculo diferencial"] },
+        { nombre: "Física general" },
+        { nombre: "Estructura de datos y gestión de archivos" },
+        { nombre: "Fundamentos de base de datos" },
+      ],
+      "IV CICLO": [
+        { nombre: "Seminario de estudio de la problemática actual" },
+        { nombre: "Taller de responsabilidad social ambiental" },
+        { nombre: "Cálculo vectorial", prereq: ["Cálculo integral"] },
+        { nombre: "Fundamentos de electricidad" },
+        { nombre: "Programación visual" },
+        { nombre: "Administración de base de datos", prereq: ["Fundamentos de base de datos"] },
+      ],
+      "V CICLO": [
+        { nombre: "Contabilidad" },
+        { nombre: "Estadística general" },
+        { nombre: "Fundamentos de administración" },
+        { nombre: "Ecuaciones diferenciales", prereq: ["Cálculo vectorial"] },
+        { nombre: "Sistemas operativos" },
+        { nombre: "Programación de aplicaciones para base de datos", prereq: ["Administración de base de datos"] },
+        { nombre: "Ingeniería de requerimientos y análisis del sistema" },
+      ],
+      "VI CICLO": [
+        { nombre: "Costos y presupuestos" },
+        { nombre: "Inferencia y probabilidades" },
+        { nombre: "Teoría de lenguajes y compiladores" },
+        { nombre: "Inteligencia de negocios y base de datos analíticas" },
+        { nombre: "Sistemas digitales" },
+        { nombre: "Programación de aplicaciones web" },
+        { nombre: "Arquitectura y diseño de software" },
+        { nombre: "Electivo 1" },
+      ],
+      "VII CICLO": [
+        { nombre: "Investigación de operaciones" },
+        { nombre: "Formulación y evaluación de proyecto TI" },
+        { nombre: "Diseño para ingeniería asistido por computadora" },
+        { nombre: "Planeamiento estratégico empresarial y de los sistemas de información" },
+        { nombre: "Arquitectura de computadoras y dispositivos móviles" },
+        { nombre: "Programación de aplicaciones web con frameworks" },
+        { nombre: "Pruebas y despliegue SW" },
+        { nombre: "Electivo 2" },
+      ],
+      "VIII CICLO": [
+        { nombre: "Metodología de la investigación para ingeniería" },
+        { nombre: "Simulación y dinámica de sistemas" },
+        { nombre: "Fundamentos de inteligencia artificial" },
+        { nombre: "Metodología de sistemas" },
+        { nombre: "Fundamentos de redes de datos" },
+        { nombre: "Programación de aplicaciones para dispositivos móviles" },
+        { nombre: "Calidad del software" },
+        { nombre: "Electivo 3" },
+      ],
+      "IX CICLO": [
+        { nombre: "Elaboración de proyecto de tesis" },
+        { nombre: "Gestión de proyectos TI" },
+        { nombre: "Aplicaciones de inteligencia artificial" },
+        { nombre: "Seguridad de la información" },
+        { nombre: "Diseño e implementación de redes de datos" },
+        { nombre: "Taller de consultoría de sistemas empresariales" },
+      ],
+      "X CICLO": [
+        { nombre: "Desarrollo de proyecto de tesis" },
+        { nombre: "Sistemas de gestión de calidad en las organizaciones" },
+        { nombre: "Auditoría informática" },
+        { nombre: "Informática forense" },
+        { nombre: "Gestión de proyectos de software" },
+        { nombre: "Prácticas pre-profesionales" },
+        { nombre: "Electivo 4" },
+      ],
     };
 
     const estadoCursos = {};
