@@ -1,0 +1,154 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Malla Curricular - Ingeniería de Sistemas (UNASAM)</title>
+  <style>
+    body {
+      font-family: Arial, sans-serif;
+      background: #f0f4f8;
+      margin: 0;
+      padding: 20px;
+    }
+    h1 {
+      text-align: center;
+      color: #003366;
+    }
+    .grid {
+      display: grid;
+      grid-template-columns: repeat(10, 1fr);
+      gap: 10px;
+      margin-top: 20px;
+    }
+    .ciclo {
+      background: #e0eaf1;
+      border-radius: 6px;
+      padding: 10px;
+    }
+    .ciclo h3 {
+      text-align: center;
+      color: #003366;
+    }
+    .course {
+      background: white;
+      border: 2px solid #ccc;
+      border-radius: 5px;
+      padding: 6px;
+      margin: 5px 0;
+      cursor: pointer;
+      position: relative;
+      transition: 0.3s;
+    }
+    .course.approved {
+      background: #c6f6c4;
+      border-color: #38a169;
+      text-decoration: line-through;
+    }
+    .course.locked {
+      background: #f9dede;
+      border-color: #e53e3e;
+      cursor: not-allowed;
+    }
+    .course.locked:hover::after {
+      content: attr(data-tooltip);
+      position: absolute;
+      background: #333;
+      color: white;
+      padding: 4px 8px;
+      border-radius: 4px;
+      font-size: 12px;
+      white-space: nowrap;
+      left: 105%;
+      top: 0;
+      z-index: 1;
+    }
+  </style>
+</head>
+<body>
+  <h1>Malla Curricular Interactiva - Ingeniería de Sistemas (UNASAM)</h1>
+  <div class="grid" id="malla"></div>
+
+  <script>
+    const cursos = {
+      "I CICLO": [
+        { nombre: "Taller de comunicación oral y escrita" },
+        { nombre: "Taller de actividades formativas" },
+        { nombre: "Taller de pensamiento lógico matemático" },
+        { nombre: "Ciudadanía y derechos humanos" },
+        { nombre: "Tópicos de la ingeniería de sistemas" },
+        { nombre: "Economía general" },
+        { nombre: "Inglés técnico básico" },
+        { nombre: "Teoría general de sistemas" },
+      ],
+      "II CICLO": [
+        { nombre: "Seminario de pensamiento filosófico" },
+        { nombre: "Taller de gestión de aprendizaje" },
+        { nombre: "Patrimonio e identidad cultural" },
+        { nombre: "Interculturalidad" },
+        { nombre: "Cálculo diferencial", prereq: ["Taller de pensamiento lógico matemático"] },
+        { nombre: "Matemática discreta", prereq: ["Taller de pensamiento lógico matemático"] },
+        { nombre: "Inglés técnico intermedio", prereq: ["Inglés técnico básico"] },
+        { nombre: "Fundamentos y técnicas de programación" },
+      ],
+      // Continúa agregando los demás ciclos aquí con la misma lógica...
+    };
+
+    const estadoCursos = {};
+
+    function crearMalla() {
+      const malla = document.getElementById('malla');
+      Object.entries(cursos).forEach(([ciclo, materias]) => {
+        const columna = document.createElement('div');
+        columna.classList.add('ciclo');
+
+        const titulo = document.createElement('h3');
+        titulo.textContent = ciclo;
+        columna.appendChild(titulo);
+
+        materias.forEach(m => {
+          const curso = document.createElement('div');
+          curso.className = 'course';
+          curso.textContent = m.nombre;
+          curso.dataset.nombre = m.nombre;
+          if (m.prereq) {
+            curso.classList.add('locked');
+            curso.dataset.tooltip = "Requiere: " + m.prereq.join(', ');
+          }
+          curso.onclick = () => toggleCurso(curso, m);
+          columna.appendChild(curso);
+          estadoCursos[m.nombre] = { aprobado: false, prereq: m.prereq || [] };
+        });
+
+        malla.appendChild(columna);
+      });
+    }
+
+    function toggleCurso(cursoDiv, curso) {
+      const nombre = cursoDiv.dataset.nombre;
+      const estado = estadoCursos[nombre];
+      if (cursoDiv.classList.contains('locked')) return;
+      estado.aprobado = !estado.aprobado;
+      cursoDiv.classList.toggle('approved', estado.aprobado);
+      actualizarBloqueos();
+    }
+
+    function actualizarBloqueos() {
+      document.querySelectorAll('.course').forEach(div => {
+        const nombre = div.dataset.nombre;
+        const estado = estadoCursos[nombre];
+        const requisitos = estado.prereq;
+        const todosAprobados = requisitos.every(r => estadoCursos[r]?.aprobado);
+        if (requisitos.length && !todosAprobados) {
+          div.classList.add('locked');
+          div.classList.remove('approved');
+        } else if (requisitos.length) {
+          div.classList.remove('locked');
+        }
+      });
+    }
+
+    crearMalla();
+  </script>
+</body>
+</html>
